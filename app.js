@@ -8,7 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , expressLayouts = require('express-ejs-layouts');
 
 mongoose.set('debug', true);
 mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
@@ -41,6 +42,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
+  app.use(expressLayouts); 
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
