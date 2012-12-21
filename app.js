@@ -9,7 +9,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
-  , expressLayouts = require('express-ejs-layouts');
+  , partials = require('express-partials');
 
 mongoose.set('debug', true);
 mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
@@ -42,7 +42,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
-  app.use(expressLayouts); 
+  app.use(partials()); 
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
