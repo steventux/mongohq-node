@@ -3,14 +3,19 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path')
-  , mongoose = require('mongoose')
-  , partials = require('express-partials');
-
+var ejs       = require('ejs')
+  , express   = require('express')
+  , http      = require('http')
+  , markdown  = require('markdown').markdown
+  , mongoose  = require('mongoose')
+  , partials  = require('express-partials')
+  , path      = require('path')
+  , routes    = require('./routes')
+  , user      = require('./routes/user');
+  
+/**
+ * Mongoose config 
+ */
 mongoose.set('debug', true);
 mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
 
@@ -29,7 +34,16 @@ db.once('open', function callback () {
 
 });
 
+/**
+ * EJS / Markdown filter
+ */
+ejs.filters.markdown = function(obj){
+  return markdown.toHTML(obj);
+}
 
+/**
+ * App config 
+ */
 var app = express();
 
 app.configure(function(){
