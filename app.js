@@ -10,8 +10,7 @@ var ejs       = require('ejs')
   , mongoose  = require('mongoose')
   , partials  = require('express-partials')
   , path      = require('path')
-  , routes    = require('./routes')
-  , user      = require('./routes/user');
+  , routes    = require('./routes');
   
 /**
  * Mongoose config 
@@ -65,12 +64,24 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// Redundant middleware as the catchall route handles this.
+// I still feel better knowin it's there though.
+app.use(function(req, res, next){
+  res.send(404, 'That piece of the internet is missing.');
+});
+
+/**
+ * Routing
+ */
 app.get('/', routes.index);
-app.get('/users', user.list);
+
+// Give other specific routes priority by placing them before this one
+app.get('/:path', routes.contentByPath);
 
 
-// app is a callback function or an express application
+// Export the app for tests/console debugging.
 module.exports = app;
+
 if (!module.parent) {
   http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
