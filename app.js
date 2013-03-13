@@ -72,7 +72,7 @@ app.get('/users', user.list);
 // app is a callback function or an express application
 module.exports = app;
 if (!module.parent) {
-  http.createServer(app).listen((process.env.PORT || 3000), function(){
+  http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
   });
 }
