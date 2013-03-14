@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var Content = require('../models/content'),
+    mongoose = require('mongoose');
 
 var noDoc = {
   title : "Oops!",
@@ -9,7 +10,6 @@ var noDoc = {
  * GET index.
  */
 exports.index = function(req, res){
-  var Content = mongoose.model('Content');
   Content.findOne({path : "/"}, 
     function(err, doc) {
       if (err) {
@@ -24,7 +24,6 @@ exports.index = function(req, res){
  * GET content by path.
  */
 exports.contentByPath = function(req, res){
-  var Content = mongoose.model('Content');
   content = Content.findOne({path : req.params.path}, 
     function(err, doc) {
       if (err) {}

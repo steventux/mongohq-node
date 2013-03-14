@@ -20,17 +20,8 @@ mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
 db.once('open', function callback () {
-
   console.log("Connected to MongoDB");
-  
-  var contentSchema = mongoose.Schema({
-    title: String, path: String, body: String
-  }, { collection: 'contents' } );
-  
-  mongoose.model('Content', contentSchema, 'contents');
-
 });
 
 /**
