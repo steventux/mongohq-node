@@ -11,5 +11,9 @@
     "mongoose": "*",
     "markdown": "*",
     "express-partials": "*"
+  },
+  "devDependencies": {
+    "mocha": "*"
+    "zombie": "*"
   }
 }
