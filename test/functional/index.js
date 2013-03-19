@@ -29,6 +29,20 @@ describe('homepage', function(){
     );
   });
 
+  it('should have navigation', function(done){
+    assert.equal("Home", browser.text("ul.nav li.active a"));
+    assert.equal("Recent work", browser.text("ul.nav li a[href='/projects']"));
+    assert.equal("Contact", browser.text("ul.nav li a[href='/contact']"));
+    assert.equal("About", browser.text("ul.nav li a[href='/about']"));
+    done();
+  });
+
+  it('should have some footer text', function(done){
+    assert.equal("© Laing Solutions 2013. Company # 6376724.", browser.text("div.container p.muted.credit"));
+    done();
+  });
+
+
   after(function(){
     databaseCleaner.clean(mongoose.connections[0].db, function() {});
   });
