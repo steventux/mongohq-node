@@ -15,8 +15,8 @@ var ejs       = require('ejs')
 /**
  * Mongoose config 
  */
-mongoose.set('debug', true);
-mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
+mongoose.set('debug', true); // TODO: Should be ENV dependent.
+mongoose.connect(process.env.MONGODB_CONN);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
