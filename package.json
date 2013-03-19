@@ -13,7 +13,9 @@
     "express-partials": "*"
   },
   "devDependencies": {
-    "mocha": "*"
-    "zombie": "*"
+    "database-cleaner": "*",
+    "factory-lady": "*",
+    "mocha": "*",
+    "zombie": "2.0.0-alpha11"
   }
 }
