@@ -1,49 +1,33 @@
 var helper          = require('../test-helper'),
-    assert          = helper.assert,
-    app             = helper.app,
-    Browser         = helper.zombie,
     Content         = helper.Content,
-    Factory         = helper.Factory,
-    http            = helper.http,
-    mongoose        = helper.mongoose,
-    browser         = new Browser(),
-    databaseCleaner = new DatabaseCleaner('mongodb');
+    Factory         = helper.Factory;
 
-describe('homepage', function(){
+describe('The homepage', function() {
 
-  before(function(){
-    http.createServer(app).listen(process.env.PORT);
+  before(function(done){
     Factory.create('content',function(){});
+    this.browser.visit("/").
+      then(done,done);
   });
-  
+ 
   it('should show some headings', function(done){
-    browser.visit("http://localhost:" + process.env.PORT + "/", { debug : true }, 
-      function () {
-        // Uncomment to see the doc source.
-        // console.log(browser.document.innerHTML)
-        assert.ok(browser.success);
-        assert.equal("Testing!", browser.text("h1"))
-        assert.equal("Some test content", browser.text("h3"));
-        done();
-      }
-    );
+    this.browser.success.should.be.ok;
+    this.browser.text("h1").should.equal("Testing!")
+    this.browser.text("h3").should.equal("Some test content");
+    done();
   });
 
   it('should have navigation', function(done){
-    assert.equal("Home", browser.text("ul.nav li.active a"));
-    assert.equal("Recent work", browser.text("ul.nav li a[href='/projects']"));
-    assert.equal("Contact", browser.text("ul.nav li a[href='/contact']"));
-    assert.equal("About", browser.text("ul.nav li a[href='/about']"));
+    this.browser.text("ul.nav li.active a").should.equal("Home");
+    this.browser.text("ul.nav li a[href='/projects']").should.equal("Recent work");
+    this.browser.text("ul.nav li a[href='/contact']").should.equal("Contact");
+    this.browser.text("ul.nav li a[href='/about']").should.equal("About");
     done();
   });
 
   it('should have some footer text', function(done){
-    assert.equal("© Laing Solutions 2013. Company # 6376724.", browser.text("div.container p.muted.credit"));
+    this.browser.text("div.container p.muted.credit").should.equal("© Laing Solutions 2013. Company # 6376724.");
     done();
   });
 
-
-  after(function(){
-    databaseCleaner.clean(mongoose.connections[0].db, function() {});
-  });
 });

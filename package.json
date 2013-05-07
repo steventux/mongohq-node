@@ -16,6 +16,7 @@
     "database-cleaner": "*",
     "factory-lady": "*",
     "mocha": "*",
+    "should": "*",
     "zombie": "2.0.0-alpha11"
   }
 }
