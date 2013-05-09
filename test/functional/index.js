@@ -1,32 +1,41 @@
 var helper          = require('../test-helper'),
+    cheerio         = require('cheerio'),
     Content         = helper.Content,
-    Factory         = helper.Factory;
+    Factory         = helper.Factory,
+    request         = helper.request;
+
+var response = {};
 
 describe('The homepage', function() {
 
   before(function(done){
     Factory.create('content',function(){});
-    this.browser.visit("/").
-      then(done,done);
+    request.get('http://localhost:3001/', function(err, res, body) {
+      response.err = err;
+      response.res = res;
+      response.body = body;
+      response.$ = cheerio.load(body);
+      done();
+    });
   });
  
   it('should show some headings', function(done){
-    this.browser.success.should.be.ok;
-    this.browser.text("h1").should.equal("Testing!")
-    this.browser.text("h3").should.equal("Some test content");
+    response.res.statusCode.should.be.ok;
+    response.body.should.match(/Testing!/)
+    response.body.should.match(/Some test content/);
     done();
   });
 
   it('should have navigation', function(done){
-    this.browser.text("ul.nav li.active a").should.equal("Home");
-    this.browser.text("ul.nav li a[href='/projects']").should.equal("Recent work");
-    this.browser.text("ul.nav li a[href='/contact']").should.equal("Contact");
-    this.browser.text("ul.nav li a[href='/about']").should.equal("About");
+    response.$("ul.nav li.active a").text().should.equal("Home");
+    response.$("ul.nav li a[href='/projects']").text().should.equal("Recent work");
+    response.$("ul.nav li a[href='/contact']").text().should.equal("Contact");
+    response.$("ul.nav li a[href='/about']").text().should.equal("About");
     done();
   });
 
   it('should have some footer text', function(done){
-    this.browser.text("div.container p.muted.credit").should.equal("© Laing Solutions 2013. Company # 6376724.");
+    response.$("div.container p.credit").text().should.match(/© Laing Solutions 2013\. Company # 6376724/);
     done();
   });
 
