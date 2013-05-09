@@ -13,9 +13,11 @@
     "express-partials": "*"
   },
   "devDependencies": {
+    "cheerio": "*",
     "database-cleaner": "*",
     "factory-lady": "*",
     "mocha": "*",
+    "request": "*",
     "should": "*",
     "zombie": "2.0.0-alpha11"
   }
