@@ -6,6 +6,10 @@ var noDoc = {
   body : "## That piece of the internet is missing!\n\n[Try this!](/)" 
 }
 
+exports.login = function(req, res) {
+  res.render('login');
+}
+
 /*
  * GET index.
  */

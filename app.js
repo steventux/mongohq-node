@@ -73,19 +73,22 @@ app.use(function(req, res, next){
  */
 app.get('/', routes.index);
 
-app.get('/admin/login', adminRoutes.login);
-// Protect admin routes
-app.get('/admin/:path',
-  ensureLoggedIn('/admin/login'),
-  function(res, req) {
-    res.redirect('/admin/' + req.params.path)
+app.get('/login', routes.login);
+
+app.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.redirect('/')
   });
 
-app.post('/admin/login',
-  passport.authenticate('local'),
-  function(res, req) {
-    res.redirect('/admin/index')
+// Protect admin routes
+app.get('/admin/:path',
+  ensureLoggedIn('/login'),
+  function(req, res) {
+    res.render('admin/' + req.params.path)
   });
+
+
 
 app.get('/admin/index', adminRoutes.index);
 
