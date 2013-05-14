@@ -10,7 +10,7 @@ var adminRoutes = require('./routes/admin')
   , http      = require('http')
   , mongoose  = require('mongoose')
   , partials  = require('express-partials')
-  , passport = require('passport')
+  , passport  = require('passport')
   , path      = require('path')
   , routes    = require('./routes');
    
@@ -53,10 +53,14 @@ app.configure('development', function(){
 });
 
 /**
- * Filters etc.
+ * Libs and helpers.
  */
 require('./lib/markdown');
 require('./lib/passport');
+
+app.locals.pageTitle = function(obj) {
+  return (obj.title ? obj.title : obj);
+};
 
 // Redundant middleware as the catchall route handles this.
 // I still feel better knowin it's there though.
