@@ -72,23 +72,16 @@ app.use(function(req, res, next){
  * Routing
  */
 app.get('/', routes.index);
-
 app.get('/login', routes.login);
 
-app.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-    res.redirect('/')
-  });
+app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
 // Protect admin routes
 app.get('/admin/:path',
   ensureLoggedIn('/login'),
   function(req, res) {
-    res.render('admin/' + req.params.path)
+    res.render('admin/' + req.params.path, {user: req.user})
   });
-
-
 
 app.get('/admin/index', adminRoutes.index);
 

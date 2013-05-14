@@ -8,13 +8,18 @@ var  app = require('../app')
   ,  Factory = require('factory-lady')
   ,  http    = require('http')
   ,  mongoose = require('mongoose')
-  ,  request = require('request');
+  ,  request = require('request')
+  ,  User = require('../models/user');
 
 /* Factories */
 Factory.define('content', Content, {
   title    : "Testing!", 
   path     : '/',
   body     : '### Some test content'
+});
+Factory.define('user', User, {
+  username : "admin", 
+  password : 'blank'
 });
 
 /* Setup */
@@ -38,5 +43,6 @@ module.exports = {
   http            : http,
   mongoose        : mongoose,
   request         : request,
-  should          : require('should')
+  should          : require('should'),
+  User            : User
 }
