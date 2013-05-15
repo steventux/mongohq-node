@@ -4,8 +4,8 @@
  */
 
 var adminRoutes = require('./routes/admin')
-  , ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
   , ejs       = require('ejs')
+  , ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
   , express   = require('express')
   , http      = require('http')
   , mongoose  = require('mongoose')
@@ -76,14 +76,9 @@ app.get('/login', routes.login);
 
 app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
-// Protect admin routes
-app.get('/admin/:path',
-  ensureLoggedIn('/login'),
-  function(req, res) {
-    res.render('admin/' + req.params.path, {user: req.user})
-  });
-
-app.get('/admin/index', adminRoutes.index);
+// Admin routes
+app.get('/admin/contents', ensureLoggedIn(), adminRoutes.contents);
+app.get('/admin/index', ensureLoggedIn(), adminRoutes.index);
 
 // Give other specific routes priority by placing them before this one
 app.get('/:path', routes.contentByPath);
