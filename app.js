@@ -4,6 +4,7 @@
  */
 
 var adminRoutes = require('./routes/admin')
+  , adminContentRoutes = require('./routes/admin/contents')
   , ejs       = require('ejs')
   , ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
   , express   = require('express')
@@ -72,13 +73,16 @@ app.use(function(req, res, next){
  * Routing
  */
 app.get('/', routes.index);
+// Auth routes
 app.get('/login', routes.login);
-
 app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
-
 // Admin routes
-app.get('/admin/contents', ensureLoggedIn(), adminRoutes.contents);
-app.get('/admin/index', ensureLoggedIn(), adminRoutes.index);
+app.get('/admin/index',             ensureLoggedIn(), adminRoutes.index);
+// Admin content routes
+app.get('/admin/contents',          ensureLoggedIn(), adminContentRoutes.index);
+app.get('/admin/contents/new',      ensureLoggedIn(), adminContentRoutes._new);
+app.post('/admin/contents',         ensureLoggedIn(), adminContentRoutes.create);
+app.get('/admin/contents/:id/edit', ensureLoggedIn(), adminContentRoutes.edit);
 
 // Give other specific routes priority by placing them before this one
 app.get('/:path', routes.contentByPath);
