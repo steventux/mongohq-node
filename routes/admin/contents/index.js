@@ -1,8 +1,9 @@
+var Content = require('./../../../models/content');
 /*
  * GET admin/contents
  */
 exports.index = function(req, res){
-  var contents = Content.find(function(e, docs){
+  Content.find(function(e, docs){
     res.render('admin/contents/index', { contents : (e ? [] : docs) });
   });
 }
@@ -27,12 +28,12 @@ exports.edit = function(req, res){
  * TODO: Validation, sensible routing.
  */
 exports.create = function(req, res){
-  var content = new Content(req.params.content);
+  var content = new Content(req.body.content);
   if (content.save(function(err, content) {
     if (err) {
       res.render('admin/contents/new', { err: err });
     } else {
-      res.render('admin/contents/index');
+      res.redirect('/admin/contents');
     }
   }));
 }
