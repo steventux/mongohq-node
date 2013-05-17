@@ -13,7 +13,8 @@
     "markdown": "*",
     "express-partials": "*",
     "passport": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "password-hash": "*"
   },
   "devDependencies": {
     "cheerio": "*",
