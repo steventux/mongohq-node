@@ -1,5 +1,3 @@
-var Content = require('./../../models/content');
-
 /*
  * GET index.
  */
