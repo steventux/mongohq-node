@@ -19,7 +19,7 @@ Factory.define('content', Content, {
 });
 Factory.define('user', User, {
   username : "admin", 
-  password : 'blank'
+  password : 'sha1$3dda71b2$1$2d569c8680e2ff6d633518f182648e63344d251d' // 'blank'
 });
 
 /* Setup */
