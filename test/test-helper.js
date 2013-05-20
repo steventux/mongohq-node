@@ -8,6 +8,7 @@ var  app = require('../app')
   ,  Factory = require('factory-lady')
   ,  http    = require('http')
   ,  mongoose = require('mongoose')
+  ,  passwordHash    = require('password-hash')
   ,  request = require('request')
   ,  User = require('../models/user');
 
@@ -19,7 +20,7 @@ Factory.define('content', Content, {
 });
 Factory.define('user', User, {
   username : "admin", 
-  password : 'sha1$3dda71b2$1$2d569c8680e2ff6d633518f182648e63344d251d' // 'blank'
+  password : passwordHash.generate('blank')
 });
 
 /* Setup */
