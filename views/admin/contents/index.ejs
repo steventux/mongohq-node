@@ -5,7 +5,10 @@
   </tr>
   <tbody>
     <% contents.forEach(function(content) { %>
-    <tr><td><%= content.title %></td><td><%= content.path %></td></tr>
+    <tr>
+      <td><%= content.title %></td><td><%= content.path %></td>
+      <td><a href="/admin/contents/<%= content._id %>/edit">Edit</a></td> 
+    </tr>
     <% }) %>
   </tbody>
 </table>

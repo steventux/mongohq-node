@@ -12,15 +12,17 @@ exports.index = function(req, res){
  * GET admin/contents/new
  */
 exports._new = function(req, res){
-  res.render('admin/contents/new');
+  res.render('admin/contents/new', { content: new Content() });
 }
 
 /*
  * GET admin/contents/:id/edit
  */
 exports.edit = function(req, res){
-  var content = Content.findOne(req.params.id);
-  res.render('admin/contents/edit', { content: content });
+  Content.findOne({_id: req.params.id}, function(err, content) {
+    console.log(content)
+    res.render('admin/contents/edit', { content: content });
+  });
 }
 
 /*
