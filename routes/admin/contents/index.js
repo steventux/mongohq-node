@@ -39,3 +39,18 @@ exports.create = function(req, res){
     }
   }));
 }
+
+/*
+ * PUT admin/contents/:id
+ * TODO: Validation, sensible routing.
+ */
+exports.update = function(req, res){
+  var content = Content.findOneAndUpdate({_id : req.params.id}, req.body.content,
+    function(err, content) {
+      if (err) {
+        res.render('admin/contents/'+req.params.id+'/edit', { err: err });
+      } else {
+        res.redirect('/admin/contents');
+      }
+  });
+}

@@ -83,6 +83,7 @@ app.get('/admin/contents',          ensureLoggedIn(), adminContentRoutes.index);
 app.get('/admin/contents/new',      ensureLoggedIn(), adminContentRoutes._new);
 app.post('/admin/contents',         ensureLoggedIn(), adminContentRoutes.create);
 app.get('/admin/contents/:id/edit', ensureLoggedIn(), adminContentRoutes.edit);
+app.put('/admin/contents/:id',      ensureLoggedIn(), adminContentRoutes.update);
 
 // Give other specific routes priority by placing them before this one
 app.get('/:path', routes.contentByPath);
