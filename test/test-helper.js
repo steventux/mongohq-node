@@ -43,6 +43,8 @@ module.exports = {
   Factory         : Factory,
   http            : http,
   mongoose        : mongoose,
+  passportStub    : require('./passport-stub'),
+  passwordHash    : passwordHash,
   request         : request,
   should          : require('should'),
   User            : User
