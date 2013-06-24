@@ -3,7 +3,7 @@ var Content = require('./../../../models/content');
  * GET admin/contents
  */
 exports.index = function(req, res){
-  Content.find(function(e, docs){
+  Content.find().sort('path').exec(function(e, docs){
     res.render('admin/contents/index', { contents : (e ? [] : docs) });
   });
 }

@@ -34,12 +34,11 @@ describe('Admin contents page', function() {
       request.get('http://localhost:3001/admin/contents', function(err, res, body) {
         var $ = cheerio.load(body);
         res.statusCode.should == 200;
-        console.log(body);
-        $('td').eq(0).text().should.equal('Foo!');
-        $('td').eq(1).text().should.equal('foo');
+        $('td').eq(0).text().should.equal('Bar!');
+        $('td').eq(1).text().should.equal('bar');
         $('td').eq(2).text().should.equal('Edit');
-        $('td').eq(3).text().should.equal('Bar!');
-        $('td').eq(4).text().should.equal('bar');
+        $('td').eq(3).text().should.equal('Foo!');
+        $('td').eq(4).text().should.equal('foo');
         $('td').eq(5).text().should.equal('Edit');
         $('td').eq(6).text().should.equal('Meh!');
         $('td').eq(7).text().should.equal('meh');
