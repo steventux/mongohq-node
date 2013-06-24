@@ -6,7 +6,8 @@ var helper          = require('../../test-helper'),
     passportStub    = helper.passportStub,
     passwordHash    = helper.passwordHash,
     request         = helper.request,
-    User            = helper.User;
+    User            = helper.User,
+    content;
 
 describe('Admin contents page', function() {
 
@@ -54,6 +55,7 @@ describe('Admin contents page', function() {
         var $ = cheerio.load(body);
         res.statusCode.should.be.ok;
         $('form').eq(1).attr('action').should.equal('/admin/contents');
+        $("form input[name='content[title]']").val().should.equal('');       
         done();
       });
     });
@@ -66,8 +68,23 @@ describe('Admin contents page', function() {
   });
 
   describe('GET edit', function(){
+    before(function(done){
+      Content.findOne({path: "meh"}, function(err, doc){
+        content = doc;
+        done();
+      })
+    })
+
     it('should display a form to edit existing content', function(done){
-      done();
+      request.get('http://localhost:3001/admin/contents/' + content._id + '/edit', function(err, res, body) {
+        var $ = cheerio.load(body);
+        res.statusCode.should.be.ok;
+        $('form').eq(1).attr('action').should.equal('/admin/contents/' + content._id);
+        $("form input[name='content[title]']").val().should.equal('Meh!');
+        $("form input[name='content[path]']").val().should.equal('meh');
+        $("form textarea[name='content[body]']").val().should.equal('### Some meh content');
+        done();
+      });
     });
   });
 
