@@ -29,49 +29,54 @@ describe('Admin contents page', function() {
     done();
   });
 
-  it('should display contents index', function(done){
-    request.get('http://localhost:3001/admin/contents', function(err, res, body) {
-      var $ = cheerio.load(body);
-      res.statusCode.should == 200;
-      console.log(body);
-      $('td').eq(0).text().should.equal('Foo!');
-      $('td').eq(1).text().should.equal('foo');
-      $('td').eq(2).text().should.equal('Edit');
-      $('td').eq(3).text().should.equal('Bar!');
-      $('td').eq(4).text().should.equal('bar');
-      $('td').eq(5).text().should.equal('Edit');
-      $('td').eq(6).text().should.equal('Meh!');
-      $('td').eq(7).text().should.equal('meh');
-      $('td').eq(8).text().should.equal('Edit');
+  describe("GET index", function() {
+    it('should display contents index', function(done){
+      request.get('http://localhost:3001/admin/contents', function(err, res, body) {
+        var $ = cheerio.load(body);
+        res.statusCode.should == 200;
+        console.log(body);
+        $('td').eq(0).text().should.equal('Foo!');
+        $('td').eq(1).text().should.equal('foo');
+        $('td').eq(2).text().should.equal('Edit');
+        $('td').eq(3).text().should.equal('Bar!');
+        $('td').eq(4).text().should.equal('bar');
+        $('td').eq(5).text().should.equal('Edit');
+        $('td').eq(6).text().should.equal('Meh!');
+        $('td').eq(7).text().should.equal('meh');
+        $('td').eq(8).text().should.equal('Edit');
+        done();
+      });
+    });
+  });
+
+  describe('GET new', function(){
+    it('should display a form to create new content', function(done){
+      request.get('http://localhost:3001/admin/contents/new', function(err, res, body) {
+        var $ = cheerio.load(body);
+        res.statusCode.should.be.ok;
+        $('form').eq(1).attr('action').should.equal('/admin/contents');
+        done();
+      });
+    });
+  });
+
+  describe('POST create', function(){
+    it('should accept a form submission and save new content', function(done){
+      done();
+    });
+  });
+
+  describe('GET edit', function(){
+    it('should display a form to edit existing content', function(done){
+      done();
+    });
+  });
+
+  describe('PUT update', function(){
+    it('should accept a form submission and update existing content', function(done){
       done();
     });
   });
 });
 
-describe('GET new', function(){
-  it('should display a form to create new content', function(done){
-    request.get('http://localhost:3001/admin/contents/new', function(err, res, body) {
-      var $ = cheerio.load(body);
-      res.statusCode.should.be.ok;
-      done();
-    });
-  });
-});
 
-describe('POST create', function(){
-  it('should accept a form submission and save new content', function(done){
-    done();
-  });
-});
-
-describe('GET edit', function(){
-  it('should display a form to edit existing content', function(done){
-    done();
-  });
-});
-
-describe('PUT update', function(){
-  it('should accept a form submission and update existing content', function(done){
-    done();
-  });
-});
