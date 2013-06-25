@@ -43,6 +43,7 @@ module.exports = {
   Factory         : Factory,
   http            : http,
   mongoose        : mongoose,
+  nock            : require('nock'),
   passportStub    : require('./passport-stub'),
   passwordHash    : passwordHash,
   request         : request,

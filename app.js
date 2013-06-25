@@ -85,6 +85,8 @@ app.post('/admin/contents',         ensureLoggedIn(), adminContentRoutes.create)
 app.get('/admin/contents/:id/edit', ensureLoggedIn(), adminContentRoutes.edit);
 app.put('/admin/contents/:id',      ensureLoggedIn(), adminContentRoutes.update);
 
+app.get('/search', routes.search);
+
 // Give other specific routes priority by placing them before this one
 app.get('/:path', routes.contentByPath);
 

@@ -1,5 +1,7 @@
 var Content = require('./../models/content'),
-    mongoose = require('mongoose');
+    es = require('./../lib/elasticsearch'),
+    mongoose = require('mongoose'),
+    request = require('request');
 
 var noDoc = {
   title : "Oops!",
@@ -32,5 +34,11 @@ exports.contentByPath = function(req, res){
         doc = noDoc
       };
       res.render('content', { content: doc });
+  });
+}
+
+exports.search = function(req, res){
+  es.search(req.query.q, function(result) {
+    res.render('results', { results: result, query: req.query.q });
   });
 }
