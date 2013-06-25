@@ -20,7 +20,6 @@ exports._new = function(req, res){
  */
 exports.edit = function(req, res){
   Content.findOne({_id: req.params.id}, function(err, content) {
-    console.log(content)
     res.render('admin/contents/edit', { content: content });
   });
 }
