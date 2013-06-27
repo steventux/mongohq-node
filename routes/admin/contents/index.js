@@ -1,4 +1,5 @@
-var Content = require('./../../../models/content');
+var Content = require('./../../../models/content'),
+    es      = require('./../../../lib/elasticsearch');
 /*
  * GET admin/contents
  */
@@ -34,6 +35,7 @@ exports.create = function(req, res){
     if (err) {
       res.render('admin/contents/new', { err: err });
     } else {
+      es.submit(content);
       res.redirect('/admin/contents');
     }
   }));
@@ -49,6 +51,7 @@ exports.update = function(req, res){
       if (err) {
         res.render('admin/contents/'+req.params.id+'/edit', { err: err });
       } else {
+        es.submit(content);
         res.redirect('/admin/contents');
       }
   });

@@ -3,6 +3,7 @@ var helper          = require('../../test-helper'),
     cheerio         = require('cheerio'),
     Content         = helper.Content,
     Factory         = helper.Factory,
+    nock            = helper.nock,
     passportStub    = helper.passportStub,
     passwordHash    = helper.passwordHash,
     request         = helper.request,
@@ -62,8 +63,22 @@ describe('Admin contents page', function() {
   });
 
   describe('POST create', function(){
-    it('should accept a form submission and save new content', function(done){
+    before(function(done){
+      process.env.BONSAI_URL = "http://example.com"
+      var scope = nock("http://example.com").post("/lsl-content/content/beelzebob").reply(200, JSON.stringify({
+        "ok":true,"_index":"tnho41glrc487qyvq9jf","_type":"content","_id":"beelzebob","_version":1
+      }));
       done();
+
+    });
+    it('should accept a form submission and save new content', function(done){
+      request.post('http://localhost:3001/admin/contents', 
+        { form: { content: { title: "Beelzebob", body: "# The Story of Beelzebob", path: "beelzebob" } } },
+        function(err, res, body){
+          var $ = cheerio.load(body);
+          res.statusCode.should.be.ok;
+          done();
+        });
     });
   });
 
