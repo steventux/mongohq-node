@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    markdown = require('markdown').markdown;
 
 var Content = function() {
 
@@ -7,6 +8,12 @@ var Content = function() {
     path: { type: String, required: true },
     body: { type: String, required: true }
   }, { collection: 'contents' } );
+  
+  contentSchema.methods.bodyText = function() {
+    var html = markdown.toHTML(this.body),
+        htmlRe = /(<([^>]+)>)|(&#\d+;)/ig;
+    return html.replace(htmlRe, "");
+  }
 
   return mongoose.model('Content', contentSchema);
 
