@@ -69,7 +69,6 @@ describe('Admin contents page', function() {
         "ok":true,"_index":"tnho41glrc487qyvq9jf","_type":"content","_id":"beelzebob","_version":1
       }));
       done();
-
     });
     it('should accept a form submission and save new content', function(done){
       request.post('http://localhost:3001/admin/contents', 
@@ -77,7 +76,11 @@ describe('Admin contents page', function() {
         function(err, res, body){
           var $ = cheerio.load(body);
           res.statusCode.should.be.ok;
-          done();
+          Content.findOne({'path':'beelzebob'},function(err, content){
+            content.title.should.equal("Beelzebob");
+            content.body.should.equal("# The Story of Beelzebob");
+            done();
+          });
         });
     });
   });
