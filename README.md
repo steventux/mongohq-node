@@ -1,14 +1,20 @@
 mongohq-node
 ============
 
-Simple node cms app with mongoose hookup to MongoHQ and elasticsearch as a service.
+A very simple [NodeJS](http://nodejs.org/) cms style app with [MongooseJS](http://mongoosejs.com/) hookup to [MongoHQ](https://www.mongohq.com) and [Bonsai Elasticsearch](http://www.bonsai.io/) as a service.
+
+## Deploy
+Developed with [Heroku](https://www.heroku.com/) deployment in mind, all you need to get started is to install the [mongohq](https://addons.heroku.com/mongohq) and [bonsai](https://addons.heroku.com/bonsai) addons.
 
 ## Tests
   $ mocha -R spec test/**/**
 
-### Stories
+### User needs driving this project:
 
 - As an admin user I would like to be authenticated.
 - As an admin user I would like to add new pages to the webapp.
 - As an admin user I would like to edit pages using markdown.
 - As a user I would like to search the site.
+
+## Example
+See [Laing solutions](http://laingsolutions.com)
