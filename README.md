@@ -1,6 +1,14 @@
 mongohq-node
 ============
 
-Proof of concept node app with mongoose hookup to MongoHQ.
+Simple node cms app with mongoose hookup to MongoHQ and elasticsearch as a service.
 
-Take a look at the [lsl branch](https://github.com/steventux/mongohq-node/tree/lsl) for example usage.
+## Tests
+  $ mocha -R spec test/**/**
+
+### Stories
+
+- As an admin user I would like to be authenticated.
+- As an admin user I would like to add new pages to the webapp.
+- As an admin user I would like to edit pages using markdown.
+- As a user I would like to search the site.

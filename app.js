@@ -3,43 +3,29 @@
  * Module dependencies.
  */
 
-var ejs       = require('ejs')
+var adminRoutes = require('./routes/admin')
+  , adminContentRoutes = require('./routes/admin/contents')
+  , ejs       = require('ejs')
+  , ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
   , express   = require('express')
   , http      = require('http')
-  , markdown  = require('markdown').markdown
   , mongoose  = require('mongoose')
   , partials  = require('express-partials')
+  , passport  = require('passport')
   , path      = require('path')
-  , routes    = require('./routes')
-  , user      = require('./routes/user');
-  
+  , routes    = require('./routes');
+   
 /**
  * Mongoose config 
  */
-mongoose.set('debug', true);
-mongoose.connect("mongodb://" + process.env.MONGODB_CONN);
+mongoose.set('debug', true); // TODO: Should be ENV dependent.
+mongoose.connect(process.env.MONGOHQ_URL);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
 db.once('open', function callback () {
-
   console.log("Connected to MongoDB");
-  
-  var contentSchema = mongoose.Schema({
-    title: String, path: String, body: String
-  }, { collection: 'contents' } );
-  
-  mongoose.model('Content', contentSchema, 'contents');
-
 });
-
-/**
- * EJS / Markdown filter
- */
-ejs.filters.markdown = function(obj){
-  return markdown.toHTML(obj);
-}
 
 /**
  * App config 
@@ -54,8 +40,10 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+  app.use(express.cookieParser('m0ng0hQ-n0d3'));
+  app.use(express.session({ secret: 'm0ng0hQ-n0d3-535510n' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(partials()); 
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -65,12 +53,47 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+/**
+ * Libs and helpers.
+ */
+require('./lib/markdown');
+require('./lib/passport');
+
+app.locals.pageTitle = function(obj) {
+  return (obj.title ? obj.title : obj);
+};
+
+// Redundant middleware as the catchall route handles this.
+// I still feel better knowin it's there though.
+app.use(function(req, res, next){
+  res.send(404, 'That piece of the internet is missing.');
+});
+
+/**
+ * Routing
+ */
 app.get('/', routes.index);
-app.get('/users', user.list);
+// Auth routes
+app.get('/login', routes.login);
+app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+// Admin routes
+app.get('/admin/index',             ensureLoggedIn(), adminRoutes.index);
+// Admin content routes
+app.get('/admin/contents',          ensureLoggedIn(), adminContentRoutes.index);
+app.get('/admin/contents/new',      ensureLoggedIn(), adminContentRoutes._new);
+app.post('/admin/contents',         ensureLoggedIn(), adminContentRoutes.create);
+app.get('/admin/contents/:id/edit', ensureLoggedIn(), adminContentRoutes.edit);
+app.put('/admin/contents/:id',      ensureLoggedIn(), adminContentRoutes.update);
+
+app.get('/search', routes.search);
+
+// Give other specific routes priority by placing them before this one
+app.get('/:path', routes.contentByPath);
 
 
-// app is a callback function or an express application
+// Export the app for tests/console debugging.
 module.exports = app;
+
 if (!module.parent) {
   http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));

@@ -6,10 +6,23 @@
     "start": "node app"
   },
   "dependencies": {
+    "connect-ensure-login": "*",
     "express": "3.0.4",
     "ejs": "*",
     "mongoose": "*",
     "markdown": "*",
-    "express-partials": "*"
+    "express-partials": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "password-hash": "*",
+    "request": "*"
+  },
+  "devDependencies": {
+    "cheerio": "*",
+    "database-cleaner": "*",
+    "factory-lady": "*",
+    "mocha": "*",
+    "nock": "*",
+    "should": "*"
   }
 }

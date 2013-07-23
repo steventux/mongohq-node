@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title><% pageTitle("Welcome") %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/app.css' />
+    <link href='http://fonts.googleapis.com/css?family=Rationale' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <%- partial('navigation') %> 
-    <div class="container">
+    <div class="main-content container">
       <%- body %>
     </div>
+    <%- partial('footer') %>
   </body>
 </html>
