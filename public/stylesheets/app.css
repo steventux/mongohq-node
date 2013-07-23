@@ -1,4 +1,5 @@
 .navbar-inverse .brand { font-family: 'Rationale', sans-serif; font-size: 1.8em; }
-.navbar-inner { border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0; }
+.navbar-inner { min-height: 46px; border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0; }
 .main-content { min-height: 400px; }
 .main-content img { margin: 6px; }
+.main-content p.image-anchors a:hover { text-decoration: none }
