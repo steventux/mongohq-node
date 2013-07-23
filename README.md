@@ -7,7 +7,7 @@ A very simple [NodeJS](http://nodejs.org/) cms style app with [MongooseJS](http:
 Developed with [Heroku](https://www.heroku.com/) deployment in mind, all you need to get started is to install the [mongohq](https://addons.heroku.com/mongohq) and [bonsai](https://addons.heroku.com/bonsai) addons.
 
 ## Tests
-  $ mocha -R spec test/**/**
+  `$ mocha -R spec test/**/**`
 
 ### User needs driving this project:
 
