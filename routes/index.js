@@ -5,7 +5,7 @@ var Content = require('./../models/content'),
 
 var noDoc = {
   title : "Oops!",
-  body : "## That piece of the internet is missing!\n\n[Try this!](/)" 
+  body : "## That piece of the internet is missing!\n\n[Log in to create some internets](/admin/contents/new)"
 }
 
 exports.login = function(req, res) {
