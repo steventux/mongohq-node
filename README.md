@@ -1,7 +1,7 @@
 mongohq-node
 ============
 
-A very simple [NodeJS](http://nodejs.org/) cms style app with [MongooseJS](http://mongoosejs.com/) hookup to [MongoHQ](https://www.mongohq.com) and [Bonsai Elasticsearch](http://www.bonsai.io/) as a service.
+A very simple [NodeJS](http://nodejs.org/) cms app with [MongooseJS](http://mongoosejs.com/) hookup to [MongoHQ](https://www.mongohq.com) and search using [Bonsai Elasticsearch](http://www.bonsai.io/).
 
 ## Deploy
 Developed with [Heroku](https://www.heroku.com/) deployment in mind, all you need to get started is to install the [mongohq](https://addons.heroku.com/mongohq) and [bonsai](https://addons.heroku.com/bonsai) addons.
